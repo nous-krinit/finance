@@ -9,3 +9,5 @@ const Color transparentColor = Colors.transparent;
 const Color greenLime = Color(0xff32CD32);
 const Color greyColor = Color(0xffC2C2C2);
 const Color darkGreyColor = Color(0xff2C2C2C);
+const Color profitColor = Color(0xff2ECC71);
+const Color lossColor = Color(0xffC0392B);

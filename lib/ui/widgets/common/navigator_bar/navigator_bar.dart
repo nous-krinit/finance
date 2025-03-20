@@ -6,7 +6,12 @@ import 'navigator_bar_model.dart';
 
 class NavigatorBar extends StackedView<NavigatorBarModel> {
   final int selectedIndex;
-  const NavigatorBar({Key? key, required this.selectedIndex}) : super(key: key);
+  final ValueChanged<int>? onDestinationSelected;
+  const NavigatorBar(
+      {Key? key,
+      required this.selectedIndex,
+      required this.onDestinationSelected})
+      : super(key: key);
 
   @override
   Widget builder(
@@ -18,25 +23,22 @@ class NavigatorBar extends StackedView<NavigatorBarModel> {
       backgroundColor: primaryColor,
       indicatorColor: transparentColor,
       selectedIndex: selectedIndex,
-      onDestinationSelected: (index) {},
+      onDestinationSelected: onDestinationSelected,
       destinations: const <Widget>[
         NavigationDestination(
             icon: Icon(
               Icons.task_alt_rounded,
-              color: tertiaryColor,
             ),
             label: 'Transactions'),
         NavigationDestination(
           icon: Icon(
             Icons.bar_chart,
-            color: secondaryColor,
           ),
           label: 'Overview',
         ),
         NavigationDestination(
             icon: Icon(
               Icons.account_circle_rounded,
-              color: secondaryColor,
             ),
             label: 'Categories'),
       ],

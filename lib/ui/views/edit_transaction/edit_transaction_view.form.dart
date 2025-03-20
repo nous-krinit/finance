@@ -17,18 +17,18 @@ const String CategoryValueKey = 'category';
 const String DateValueKey = 'date';
 
 final Map<String, TextEditingController>
-    _CreateTransactionViewTextEditingControllers = {};
+    _EditTransactionViewTextEditingControllers = {};
 
-final Map<String, FocusNode> _CreateTransactionViewFocusNodes = {};
+final Map<String, FocusNode> _EditTransactionViewFocusNodes = {};
 
 final Map<String, String? Function(String?)?>
-    _CreateTransactionViewTextValidations = {
+    _EditTransactionViewTextValidations = {
   AmountValueKey: null,
   NoteValueKey: null,
   CategoryValueKey: null,
 };
 
-mixin $CreateTransactionView {
+mixin $EditTransactionView {
   TextEditingController get amountController =>
       _getFormTextEditingController(AmountValueKey);
   TextEditingController get noteController =>
@@ -44,21 +44,21 @@ mixin $CreateTransactionView {
     String key, {
     String? initialValue,
   }) {
-    if (_CreateTransactionViewTextEditingControllers.containsKey(key)) {
-      return _CreateTransactionViewTextEditingControllers[key]!;
+    if (_EditTransactionViewTextEditingControllers.containsKey(key)) {
+      return _EditTransactionViewTextEditingControllers[key]!;
     }
 
-    _CreateTransactionViewTextEditingControllers[key] =
+    _EditTransactionViewTextEditingControllers[key] =
         TextEditingController(text: initialValue);
-    return _CreateTransactionViewTextEditingControllers[key]!;
+    return _EditTransactionViewTextEditingControllers[key]!;
   }
 
   FocusNode _getFormFocusNode(String key) {
-    if (_CreateTransactionViewFocusNodes.containsKey(key)) {
-      return _CreateTransactionViewFocusNodes[key]!;
+    if (_EditTransactionViewFocusNodes.containsKey(key)) {
+      return _EditTransactionViewFocusNodes[key]!;
     }
-    _CreateTransactionViewFocusNodes[key] = FocusNode();
-    return _CreateTransactionViewFocusNodes[key]!;
+    _EditTransactionViewFocusNodes[key] = FocusNode();
+    return _EditTransactionViewFocusNodes[key]!;
   }
 
   /// Registers a listener on every generated controller that calls [model.setData()]
@@ -110,16 +110,15 @@ mixin $CreateTransactionView {
   void disposeForm() {
     // The dispose function for a TextEditingController sets all listeners to null
 
-    for (var controller
-        in _CreateTransactionViewTextEditingControllers.values) {
+    for (var controller in _EditTransactionViewTextEditingControllers.values) {
       controller.dispose();
     }
-    for (var focusNode in _CreateTransactionViewFocusNodes.values) {
+    for (var focusNode in _EditTransactionViewFocusNodes.values) {
       focusNode.dispose();
     }
 
-    _CreateTransactionViewTextEditingControllers.clear();
-    _CreateTransactionViewFocusNodes.clear();
+    _EditTransactionViewTextEditingControllers.clear();
+    _EditTransactionViewFocusNodes.clear();
   }
 }
 
@@ -145,9 +144,9 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({AmountValueKey: value}),
     );
 
-    if (_CreateTransactionViewTextEditingControllers.containsKey(
+    if (_EditTransactionViewTextEditingControllers.containsKey(
         AmountValueKey)) {
-      _CreateTransactionViewTextEditingControllers[AmountValueKey]?.text =
+      _EditTransactionViewTextEditingControllers[AmountValueKey]?.text =
           value ?? '';
     }
   }
@@ -157,9 +156,8 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({NoteValueKey: value}),
     );
 
-    if (_CreateTransactionViewTextEditingControllers.containsKey(
-        NoteValueKey)) {
-      _CreateTransactionViewTextEditingControllers[NoteValueKey]?.text =
+    if (_EditTransactionViewTextEditingControllers.containsKey(NoteValueKey)) {
+      _EditTransactionViewTextEditingControllers[NoteValueKey]?.text =
           value ?? '';
     }
   }
@@ -169,9 +167,9 @@ extension ValueProperties on FormStateHelper {
       this.formValueMap..addAll({CategoryValueKey: value}),
     );
 
-    if (_CreateTransactionViewTextEditingControllers.containsKey(
+    if (_EditTransactionViewTextEditingControllers.containsKey(
         CategoryValueKey)) {
-      _CreateTransactionViewTextEditingControllers[CategoryValueKey]?.text =
+      _EditTransactionViewTextEditingControllers[CategoryValueKey]?.text =
           value ?? '';
     }
   }
@@ -259,11 +257,11 @@ extension Methods on FormStateHelper {
 
 /// Returns the validation message for the given key
 String? getValidationMessage(String key) {
-  final validatorForKey = _CreateTransactionViewTextValidations[key];
+  final validatorForKey = _EditTransactionViewTextValidations[key];
   if (validatorForKey == null) return null;
 
   String? validationMessageForKey = validatorForKey(
-    _CreateTransactionViewTextEditingControllers[key]!.text,
+    _EditTransactionViewTextEditingControllers[key]!.text,
   );
 
   return validationMessageForKey;

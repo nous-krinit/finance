@@ -1,14 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
-import 'package:my_finance/ui/views/create_transaction/create_transaction_view.form.dart';
-import 'package:my_finance/ui/widgets/common/input_field/input_field.dart';
+import 'package:my_finance/models/transaction.dart';
+import 'package:my_finance/ui/views/edit_transaction/edit_transaction_view.form.dart';
 import 'package:stacked/stacked.dart';
 import 'package:stacked/stacked_annotations.dart';
 
 import '../../common/app_colors.dart';
 import '../../common/app_text_styles.dart';
 import '../../common/ui_helpers.dart';
-import 'create_transaction_viewmodel.dart';
+import '../../widgets/common/input_field/input_field.dart';
+import 'edit_transaction_viewmodel.dart';
 
 @FormView(fields: [
   FormTextField(name: 'amount'),
@@ -16,20 +17,24 @@ import 'create_transaction_viewmodel.dart';
   FormTextField(name: 'category'),
   FormDateField(name: 'date')
 ])
-class CreateTransactionView extends StackedView<CreateTransactionViewModel>
-    with $CreateTransactionView {
-  const CreateTransactionView({Key? key}) : super(key: key);
+class EditTransactionView extends StackedView<EditTransactionViewModel>
+    with $EditTransactionView {
+  final AppTransaction transaction;
+  EditTransactionView({
+    Key? key,
+    required this.transaction,
+  }) : super(key: key);
 
   @override
   Widget builder(
     BuildContext context,
-    CreateTransactionViewModel viewModel,
+    EditTransactionViewModel viewModel,
     Widget? child,
   ) {
     return Scaffold(
       backgroundColor: primaryColor,
       appBar: AppBar(
-        title: Text('New Transaction', style: TextStyles.appBar),
+        title: Text('Edit Transaction', style: TextStyles.appBar),
         automaticallyImplyLeading: true,
         iconTheme: const IconThemeData(color: secondaryColor),
         backgroundColor: primaryColor,
@@ -53,10 +58,10 @@ class CreateTransactionView extends StackedView<CreateTransactionViewModel>
                 );
                 ScaffoldMessenger.of(context).showSnackBar(snackBar);
               } else {
-                viewModel.createTx();
+                viewModel.saveTransaction(transaction.id);
               }
             },
-            child: Text('Create', style: TextStyles.appBarButton),
+            child: Text('Save', style: TextStyles.appBarButton),
           ),
           horizontalSpaceSmall
         ],
@@ -74,47 +79,6 @@ class CreateTransactionView extends StackedView<CreateTransactionViewModel>
                 mainAxisSize: MainAxisSize.min,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  verticalSpaceSmall,
-                  SizedBox(
-                      width: double.infinity,
-                      child: SegmentedButton(
-                          segments: [
-                            ButtonSegment(
-                                value: 0,
-                                label: Text('Expense',
-                                    style: TextStyles.appBarButton
-                                        .copyWith(fontSize: 14)),
-                                icon: Icon(
-                                  Icons.payments,
-                                  color: primaryColor,
-                                )),
-                            ButtonSegment(
-                                value: 1,
-                                label: Text(
-                                  'Income',
-                                  style: TextStyles.appBarButton
-                                      .copyWith(fontSize: 14),
-                                ),
-                                icon: Icon(Icons.account_balance_wallet,
-                                    color: primaryColor)),
-                          ],
-                          selected: viewModel.selectedIndex,
-                          onSelectionChanged: (Set<int> newSelection) {
-                            viewModel.selectionChanged(newSelection);
-                          },
-                          style: ButtonStyle(
-                              backgroundColor:
-                                  WidgetStateProperty.resolveWith<Color?>(
-                                (Set<WidgetState> states) {
-                                  return states.contains(WidgetState.selected)
-                                      ? greyColor
-                                      : secondaryColor;
-                                },
-                              ),
-                              shape: WidgetStateProperty.all(
-                                  RoundedRectangleBorder(
-                                      borderRadius:
-                                          BorderRadius.circular(10)))))),
                   verticalSpaceMedium,
                   InputField(
                     keyboardType: TextInputType.number,
@@ -181,19 +145,22 @@ class CreateTransactionView extends StackedView<CreateTransactionViewModel>
   }
 
   @override
-  void onViewModelReady(CreateTransactionViewModel viewModel) {
+  void onViewModelReady(EditTransactionViewModel viewModel) {
+    if (transaction != null) {
+      viewModel.setInitialData(transaction);
+    }
     syncFormWithViewModel(viewModel);
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (viewModel.initialTransaction != null) {
+        amountController.text = viewModel.initialTransaction!.amount.toString();
+        noteController.text = viewModel.initialTransaction!.note!;
+      }
+    });
   }
 
   @override
-  CreateTransactionViewModel viewModelBuilder(
+  EditTransactionViewModel viewModelBuilder(
     BuildContext context,
   ) =>
-      CreateTransactionViewModel();
-
-  @override
-  void onDispose(CreateTransactionViewModel viewModel) {
-    super.onDispose(viewModel);
-    disposeForm();
-  }
+      EditTransactionViewModel();
 }

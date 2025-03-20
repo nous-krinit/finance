@@ -9,6 +9,9 @@ import 'dart:ui' as _i6;
 import 'package:flutter/material.dart' as _i4;
 import 'package:mockito/mockito.dart' as _i1;
 import 'package:mockito/src/dummies.dart' as _i3;
+import 'package:my_finance/models/category.dart' as _i8;
+import 'package:my_finance/models/transaction.dart' as _i9;
+import 'package:my_finance/services/database_service.dart' as _i7;
 import 'package:stacked_services/stacked_services.dart' as _i2;
 
 // ignore_for_file: type=lint
@@ -679,6 +682,162 @@ class MockDialogService extends _i1.Mock implements _i2.DialogService {
         Invocation.method(
           #completeDialog,
           [response],
+        ),
+        returnValueForMissingStub: null,
+      );
+}
+
+/// A class which mocks [DatabaseService].
+///
+/// See the documentation for Mockito's code generation for more information.
+class MockDatabaseService extends _i1.Mock implements _i7.DatabaseService {
+  @override
+  int get listenersCount => (super.noSuchMethod(
+        Invocation.getter(#listenersCount),
+        returnValue: 0,
+        returnValueForMissingStub: 0,
+      ) as int);
+
+  @override
+  _i5.Future<void> initialise() => (super.noSuchMethod(
+        Invocation.method(
+          #initialise,
+          [],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<List<_i8.TxCategory>> getCategories() => (super.noSuchMethod(
+        Invocation.method(
+          #getCategories,
+          [],
+        ),
+        returnValue: _i5.Future<List<_i8.TxCategory>>.value(<_i8.TxCategory>[]),
+        returnValueForMissingStub:
+            _i5.Future<List<_i8.TxCategory>>.value(<_i8.TxCategory>[]),
+      ) as _i5.Future<List<_i8.TxCategory>>);
+
+  @override
+  List<_i8.TxCategory> getCachedCategories() => (super.noSuchMethod(
+        Invocation.method(
+          #getCachedCategories,
+          [],
+        ),
+        returnValue: <_i8.TxCategory>[],
+        returnValueForMissingStub: <_i8.TxCategory>[],
+      ) as List<_i8.TxCategory>);
+
+  @override
+  _i5.Future<void> addCategory(_i8.TxCategory? category) => (super.noSuchMethod(
+        Invocation.method(
+          #addCategory,
+          [category],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> deleteCategory(_i8.TxCategory? category) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteCategory,
+          [category],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<List<_i9.AppTransaction>> getTransactions() => (super.noSuchMethod(
+        Invocation.method(
+          #getTransactions,
+          [],
+        ),
+        returnValue:
+            _i5.Future<List<_i9.AppTransaction>>.value(<_i9.AppTransaction>[]),
+        returnValueForMissingStub:
+            _i5.Future<List<_i9.AppTransaction>>.value(<_i9.AppTransaction>[]),
+      ) as _i5.Future<List<_i9.AppTransaction>>);
+
+  @override
+  List<_i9.AppTransaction> getCachedTransactions() => (super.noSuchMethod(
+        Invocation.method(
+          #getCachedTransactions,
+          [],
+        ),
+        returnValue: <_i9.AppTransaction>[],
+        returnValueForMissingStub: <_i9.AppTransaction>[],
+      ) as List<_i9.AppTransaction>);
+
+  @override
+  _i5.Future<void> addTransaction(_i9.AppTransaction? transaction) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #addTransaction,
+          [transaction],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> deleteTransaction(_i9.AppTransaction? transaction) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #deleteTransaction,
+          [transaction],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  _i5.Future<void> updateTransaction(_i9.AppTransaction? transaction) =>
+      (super.noSuchMethod(
+        Invocation.method(
+          #updateTransaction,
+          [transaction],
+        ),
+        returnValue: _i5.Future<void>.value(),
+        returnValueForMissingStub: _i5.Future<void>.value(),
+      ) as _i5.Future<void>);
+
+  @override
+  void listenToReactiveValues(List<dynamic>? reactiveValues) =>
+      super.noSuchMethod(
+        Invocation.method(
+          #listenToReactiveValues,
+          [reactiveValues],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void addListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #addListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void removeListener(void Function()? listener) => super.noSuchMethod(
+        Invocation.method(
+          #removeListener,
+          [listener],
+        ),
+        returnValueForMissingStub: null,
+      );
+
+  @override
+  void notifyListeners() => super.noSuchMethod(
+        Invocation.method(
+          #notifyListeners,
+          [],
         ),
         returnValueForMissingStub: null,
       );

@@ -1,7 +1,5 @@
 import 'dart:core';
 
-import 'package:flutter/widgets.dart';
-
 class TxCategory {
   int? id;
   String name;
